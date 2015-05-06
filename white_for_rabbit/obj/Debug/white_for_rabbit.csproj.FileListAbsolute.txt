@@ -13,3 +13,9 @@ C:\Users\lecointe\Desktop\White\whiteRabbit2\test4WR\white_for_rabbit\white_for_
 C:\Users\lecointe\Source\Repos\navigateur_WR\white_for_rabbit\bin\Debug\white_for_rabbit.exe.config
 C:\Users\lecointe\Source\Repos\navigateur_WR\white_for_rabbit\obj\Debug\white_for_rabbit.exe
 C:\Users\lecointe\Source\Repos\navigateur_WR\white_for_rabbit\obj\Debug\white_for_rabbit.pdb
+C:\Users\lecointe\Source\Repos\navigateur_WR\white_for_rabbit\bin\Debug\white_for_rabbit.exe
+C:\Users\lecointe\Source\Repos\navigateur_WR\white_for_rabbit\bin\Debug\white_for_rabbit.pdb
+C:\Users\lecointe\Source\Repos\navigateur_WR\white_for_rabbit\obj\Debug\white_for_rabbit.csprojResolveAssemblyReference.cache
+C:\Users\lecointe\Source\Repos\navigateur_WR\white_for_rabbit\obj\Debug\white_for_rabbit.Form1.resources
+C:\Users\lecointe\Source\Repos\navigateur_WR\white_for_rabbit\obj\Debug\white_for_rabbit.Properties.Resources.resources
+C:\Users\lecointe\Source\Repos\navigateur_WR\white_for_rabbit\obj\Debug\white_for_rabbit.csproj.GenerateResource.Cache

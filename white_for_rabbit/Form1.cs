@@ -288,22 +288,16 @@ namespace white_for_rabbit
             {
                Tab = new MyTab(metroTabControl1, url, recherche,ref i, ButtonBack, ButtonNext, ref _list, metroProgressBar);
                 _list.Add(Tab);
-                
                 Tab.addNewTab(ref i);
-               // i = Tab.compter();
-              
-
 
                 /*   string a = i.ToString();
-                MessageBox.Show(a);
-                
-                a = i.ToString();
                 MessageBox.Show(a);*/
             }
             else
             {
                 Tab.Browser().Actualiser();
             }
+            
         }
         private void ButtonHome_Click(object sender, EventArgs e)
         {
@@ -382,6 +376,16 @@ namespace white_for_rabbit
 
             Tab.addNewTab(ref i);
         }
+
+        private void metroTabControl1_DoubleClick(object sender, EventArgs e)
+        {
+            if (metroTabControl1.TabCount > 2)
+            {
+                _list.RemoveAt(metroTabControl1.SelectedIndex);
+                Tab.deletTab(ref i);
+            }
+            else Application.Exit();
+        }
     }
         #endregion
 
@@ -399,7 +403,9 @@ namespace white_for_rabbit
         private List<MyTab> _list = new List<MyTab>();
         private MetroFramework.Controls.MetroProgressBar _BarreProgression;
 
-        public MyBrow(MetroFramework.Controls.MetroTabControl metroTabControl, System.Windows.Forms.ComboBox combo, TabPage tpage, MetroFramework.Controls.MetroTextBox recherche, MetroFramework.Controls.MetroButton Back, MetroFramework.Controls.MetroButton Forward,MetroFramework.Controls.MetroProgressBar metroProgressBar, ref List<MyTab> list)
+        public MyBrow(MetroFramework.Controls.MetroTabControl metroTabControl, System.Windows.Forms.ComboBox combo, TabPage tpage, MetroFramework.Controls.MetroTextBox recherche, 
+                        MetroFramework.Controls.MetroButton Back, MetroFramework.Controls.MetroButton Forward,MetroFramework.Controls.MetroProgressBar metroProgressBar, 
+                             ref List<MyTab> list)
         {
             _BarreProgression = metroProgressBar;
             _recherche = recherche;
@@ -430,6 +436,7 @@ namespace white_for_rabbit
                     _BarreProgression.Visible = false;
                 }
             }
+            else _BarreProgression.Visible = false;
         }
         private void Brow_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
@@ -449,17 +456,14 @@ namespace white_for_rabbit
 
                 Actualiser();                                            // afficher si possibilité page suivante ou précédente 
                 
-           
             }
 
         public void Actualiser()
         {
-
-            if (_list[_metroTabControl.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Complete || _list[_metroTabControl.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Interactive) // verifier que le document est charger 
+            //verifier que le browser a charger 
+            if (_list[_metroTabControl.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Complete || _list[_metroTabControl.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Interactive) 
             {
-
                 // afficher url de la page actuelle
-
                 _combo.Text = _list[_metroTabControl.SelectedIndex].Browser().Url.ToString();
             }
                     //si il y a une page suivante active le bouton suivant 
@@ -550,7 +554,9 @@ namespace white_for_rabbit
         private MyBrow _brow;
         private List<MyTab> _list = new List<MyTab>();
         private MetroFramework.Controls.MetroProgressBar _ProgressBar;
-        public MyTab(MetroFramework.Controls.MetroTabControl metroTabControl, System.Windows.Forms.ComboBox combo, MetroFramework.Controls.MetroTextBox recherche, ref int i, MetroFramework.Controls.MetroButton Back, MetroFramework.Controls.MetroButton Forward, ref List<MyTab> list, MetroFramework.Controls.MetroProgressBar metroProgressBar)
+        public MyTab(MetroFramework.Controls.MetroTabControl metroTabControl, System.Windows.Forms.ComboBox combo, MetroFramework.Controls.MetroTextBox recherche, 
+                            ref int i, MetroFramework.Controls.MetroButton Back, MetroFramework.Controls.MetroButton Forward, ref List<MyTab> list, 
+                                MetroFramework.Controls.MetroProgressBar metroProgressBar)
         {
             _metroTabControl = metroTabControl;
             _combo = combo;

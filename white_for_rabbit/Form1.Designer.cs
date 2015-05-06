@@ -61,6 +61,7 @@
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
             this.metroTabControl1.Click += new System.EventHandler(this.metroTabControl1_Click);
+            this.metroTabControl1.DoubleClick += new System.EventHandler(this.metroTabControl1_DoubleClick);
             // 
             // recherche
             // 
@@ -217,6 +218,7 @@
             // 
             // ButtonHome
             // 
+            this.ButtonHome.BackColor = System.Drawing.Color.White;
             this.ButtonHome.Location = new System.Drawing.Point(329, 40);
             this.ButtonHome.Name = "ButtonHome";
             this.ButtonHome.Size = new System.Drawing.Size(75, 23);

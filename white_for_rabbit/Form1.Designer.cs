@@ -297,26 +297,28 @@
 
         #endregion
 
-        private MetroFramework.Controls.MetroTabControl metroTabControl1;
-        private MetroFramework.Controls.MetroTextBox recherche;
+        public MetroFramework.Controls.MetroTextBox recherche;
+        public MetroFramework.Controls.MetroButton ButtonBack;
+        public MetroFramework.Controls.MetroButton ButtonNext;
+        public System.Windows.Forms.ComboBox url;
+        public MetroFramework.Controls.MetroTabControl metroTabControl1;
+        public MetroFramework.Controls.MetroProgressBar metroProgressBar;
+
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timer2;
         private MetroFramework.Controls.MetroTile metroTile1;
         private MetroFramework.Controls.MetroTile ButtonTraducteur;
-        private MetroFramework.Controls.MetroButton ButtonBack;
-        private MetroFramework.Controls.MetroButton ButtonNext;
         private MetroFramework.Controls.MetroButton ButtonActu;
         private MetroFramework.Controls.MetroButton ButtonStop;
         private MetroFramework.Controls.MetroButton ButtonHome;
-        private System.Windows.Forms.ComboBox url;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button supOnglet;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
-        private MetroFramework.Controls.MetroProgressBar metroProgressBar;
         private MetroFramework.Controls.MetroButton metroButton1;
+
     }
 }
 

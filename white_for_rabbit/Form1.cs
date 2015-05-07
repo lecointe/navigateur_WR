@@ -22,8 +22,190 @@ namespace white_for_rabbit
         int i = 0;
         List<MyTab> _list = new List<MyTab>();
 
- #region fonction
-/*
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+           
+           
+            //Initialisation du menu droit
+            metroPanel1.Width = 100;
+            metroPanel1.Dock = DockStyle.Right;
+            metroPanel1.Visible = false;
+            metroPanel1.BackColor = Color.Black;
+
+            Tab = new MyTab(this,ref _list);
+            _list.Add(Tab);
+            Tab.LoadTab(ref i);
+         //   i = Tab.compter();
+            //Les boutons precedent, suivant et stop sont grisé au demarage
+            // buttonBack.Enabled = false;
+            // buttonForward.Enabled = false;
+            // buttonStop.Enabled = false;
+            
+        }     
+
+
+#region menu droit
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (this.metroPanel1.Size.Width >= 209) this.timer1.Enabled = false;
+            else this.metroPanel1.Width += 15;
+        }
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if (this.metroPanel1.Size.Width <= 10) this.timer2.Enabled = false;
+            else this.metroPanel1.Width -= 15;
+            if (metroPanel1.Width <= 10) metroPanel1.Visible = false;
+        }
+        private void metroPanel1_MouseLeave(object sender, EventArgs e)
+        {
+ 
+        }
+        private void metroTile1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Y <= 150)
+            {
+                //le menu arrive 
+                metroPanel1.Visible = true;
+                this.timer2.Enabled = false;
+                this.timer1.Enabled = true;
+            }
+        }
+
+        private void metroPanel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.X <=5)//le menu part [e.X est la pos du curseur par rapport au menu]
+            {
+                this.timer2.Enabled = true;
+                this.timer1.Enabled = false;
+            }
+            if (e.X > 10)// le menu revient
+            {
+                this.timer2.Enabled = false;
+                this.timer1.Enabled = true;
+            }
+        }
+        #endregion
+
+#region boutton
+        private void ButtonStop_Click(object sender, EventArgs e)
+        {
+            Tab.Browser().stop();
+        }
+        private void metroTabControl1_Click(object sender, EventArgs e)
+        {
+            if (metroTabControl1.SelectedIndex == i)
+            {
+               Tab = new MyTab(this, ref _list);
+                _list.Add(Tab);
+                Tab.addNewTab(ref i);
+
+                /*   string a = i.ToString();
+                MessageBox.Show(a);*/
+            }
+            else
+            {
+                Tab.Browser().Actualiser();
+            }
+            
+        }
+        private void ButtonHome_Click(object sender, EventArgs e)
+        {
+            Tab.Browser().home();
+        }
+        private void ButtonBack_Click(object sender, EventArgs e)
+        {
+            Tab.Browser().back();
+        }
+        private void url_KeyPress(object sender, KeyPressEventArgs e)
+        {
+               if (e.KeyChar == (char)13)
+            {
+                Tab.Browser().url();
+            }
+            
+        }
+        private void ButtonActu_Click(object sender, EventArgs e)
+        {
+            Tab.Browser().actu(); 
+            
+        }
+        private void ButtonNext_Click(object sender, EventArgs e)
+        {
+            Tab.Browser().next(); 
+        }
+        private void recherche_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                Tab.Browser().recherche();
+            }
+        }
+        private void ButtonTraducteur_Click(object sender, EventArgs e)
+        {
+            // ne fonctionne pas pour webbrowser mais pour awesonium
+            // Brow.ExecuteJavascript("(function(){var s = document.createElement('script'); s.type = 'text/javascript'; s.src = 'http://labs.microsofttranslator.com/bookmarklet/default.aspx?f=js&to=fr'; document.body.insertBefore(s, document.body.firstChild);})()");
+        }
+#endregion
+
+#region test
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ((WebBrowser)metroTabControl1.SelectedTab.Controls[0]).Navigate(new Uri("http://www.facebook.com"));
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ((WebBrowser)metroTabControl1.SelectedTab.Controls[0]).Navigate(new Uri("http://www.youtube.fr"));
+        }
+
+        private void supOnglet_Click(object sender, EventArgs e)
+        {
+            if (metroTabControl1.TabCount > 2)
+            {   
+                _list.RemoveAt(metroTabControl1.SelectedIndex);
+                Tab.deletTab(ref i);   
+            }
+            else Application.Exit();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ((WebBrowser)metroTabControl1.SelectedTab.Controls[0]).Navigate(new Uri("http://www.commentcamarche.net/"));
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ((WebBrowser)metroTabControl1.SelectedTab.Controls[0]).Navigate(new Uri("http://openclassrooms.com/"));
+        }
+
+        private void metroButton1_Click(object sender, EventArgs e)
+        {
+            Tab = new MyTab(this, ref _list);
+            _list.Add(Tab);
+
+            Tab.addNewTab(ref i);
+        }
+
+        private void metroTabControl1_DoubleClick(object sender, EventArgs e)
+        {
+            if (metroTabControl1.TabCount > 2)
+            {
+                _list.RemoveAt(metroTabControl1.SelectedIndex);
+                Tab.deletTab(ref i);
+            }
+            else Application.Exit();
+        }
+    }
+        #endregion
+
+#region fonction
+    /*
        void uurl(int type)
         {
             if (type == 1)
@@ -205,192 +387,11 @@ namespace white_for_rabbit
 
 
 */
-   #endregion
+    #endregion
      
-
-        public Form1()
-        {
-            InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-           
-           
-            //Initialisation du menu droit
-            metroPanel1.Width = 100;
-            metroPanel1.Dock = DockStyle.Right;
-            metroPanel1.Visible = false;
-            metroPanel1.BackColor = Color.Black;
-
-            Tab = new MyTab(metroTabControl1, url, recherche,ref i,ButtonBack,ButtonNext,ref _list,metroProgressBar);
-            _list.Add(Tab);
-            Tab.LoadTab(ref i);
-         //   i = Tab.compter();
-            //Les boutons precedent, suivant et stop sont grisé au demarage
-            // buttonBack.Enabled = false;
-            // buttonForward.Enabled = false;
-            // buttonStop.Enabled = false;
-            
-        }     
-
-
-#region menu droit
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (this.metroPanel1.Size.Width >= 209) this.timer1.Enabled = false;
-            else this.metroPanel1.Width += 15;
-        }
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            if (this.metroPanel1.Size.Width <= 10) this.timer2.Enabled = false;
-            else this.metroPanel1.Width -= 15;
-            if (metroPanel1.Width <= 10) metroPanel1.Visible = false;
-        }
-        private void metroPanel1_MouseLeave(object sender, EventArgs e)
-        {
- 
-        }
-        private void metroTile1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Y <= 150)
-            {
-                //le menu arrive 
-                metroPanel1.Visible = true;
-                this.timer2.Enabled = false;
-                this.timer1.Enabled = true;
-            }
-        }
-
-        private void metroPanel1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.X <=5)//le menu part [e.X est la pos du curseur par rapport au menu]
-            {
-                this.timer2.Enabled = true;
-                this.timer1.Enabled = false;
-            }
-            if (e.X > 10)// le menu revient
-            {
-                this.timer2.Enabled = false;
-                this.timer1.Enabled = true;
-            }
-        }
-        #endregion
-
-#region boutton
-        private void ButtonStop_Click(object sender, EventArgs e)
-        {
-            Tab.Browser().stop();
-        }
-        private void metroTabControl1_Click(object sender, EventArgs e)
-        {
-            if (metroTabControl1.SelectedIndex == i)
-            {
-               Tab = new MyTab(metroTabControl1, url, recherche,ref i, ButtonBack, ButtonNext, ref _list, metroProgressBar);
-                _list.Add(Tab);
-                Tab.addNewTab(ref i);
-
-                /*   string a = i.ToString();
-                MessageBox.Show(a);*/
-            }
-            else
-            {
-                Tab.Browser().Actualiser();
-            }
-            
-        }
-        private void ButtonHome_Click(object sender, EventArgs e)
-        {
-            Tab.Browser().home();
-        }
-        private void ButtonBack_Click(object sender, EventArgs e)
-        {
-            Tab.Browser().back();
-        }
-        private void url_KeyPress(object sender, KeyPressEventArgs e)
-        {
-               if (e.KeyChar == (char)13)
-            {
-                Tab.Browser().url();
-            }
-            
-        }
-        private void ButtonActu_Click(object sender, EventArgs e)
-        {
-            Tab.Browser().actu(); 
-            
-        }
-        private void ButtonNext_Click(object sender, EventArgs e)
-        {
-            Tab.Browser().next(); 
-        }
-        private void recherche_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-            {
-                Tab.Browser().recherche();
-            }
-        }
-        private void ButtonTraducteur_Click(object sender, EventArgs e)
-        {
-            // ne fonctionne pas pour webbrowser mais pour awesonium
-            // Brow.ExecuteJavascript("(function(){var s = document.createElement('script'); s.type = 'text/javascript'; s.src = 'http://labs.microsofttranslator.com/bookmarklet/default.aspx?f=js&to=fr'; document.body.insertBefore(s, document.body.firstChild);})()");
-        }
-#endregion
-
-#region test
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ((WebBrowser)metroTabControl1.SelectedTab.Controls[0]).Navigate(new Uri("http://www.facebook.com"));
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            ((WebBrowser)metroTabControl1.SelectedTab.Controls[0]).Navigate(new Uri("http://www.youtube.fr"));
-        }
-
-        private void supOnglet_Click(object sender, EventArgs e)
-        {
-            if (metroTabControl1.TabCount > 2)
-            {   
-                _list.RemoveAt(metroTabControl1.SelectedIndex);
-                Tab.deletTab(ref i);   
-            }
-            else Application.Exit();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            ((WebBrowser)metroTabControl1.SelectedTab.Controls[0]).Navigate(new Uri("http://www.commentcamarche.net/"));
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            ((WebBrowser)metroTabControl1.SelectedTab.Controls[0]).Navigate(new Uri("http://openclassrooms.com/"));
-        }
-
-        private void metroButton1_Click(object sender, EventArgs e)
-        {
-            Tab = new MyTab(metroTabControl1, url, recherche, ref i, ButtonBack, ButtonNext, ref _list, metroProgressBar);
-            _list.Add(Tab);
-
-            Tab.addNewTab(ref i);
-        }
-
-        private void metroTabControl1_DoubleClick(object sender, EventArgs e)
-        {
-            if (metroTabControl1.TabCount > 2)
-            {
-                _list.RemoveAt(metroTabControl1.SelectedIndex);
-                Tab.deletTab(ref i);
-            }
-            else Application.Exit();
-        }
-    }
-        #endregion
-
+   
 #region MyBrow
-    class MyBrow : WebBrowser
+   /*  class MyBrow : WebBrowser
     {
         public string moteur = "https://www.google.fr/#q=";
         private string _nom;
@@ -537,14 +538,14 @@ namespace white_for_rabbit
             _list[_metroTabControl.SelectedIndex].Browser().Navigate(new Uri(moteur + _recherche.Text));
         }
      }
-
+ */
 #endregion
-
-
-
+   
+    
+    
 #region MyTab
 
-    class MyTab : TabPage 
+   /* class MyTab : TabPage 
     {
         private MetroFramework.Controls.MetroTabControl _metroTabControl;
         private System.Windows.Forms.ComboBox _combo;
@@ -554,6 +555,7 @@ namespace white_for_rabbit
         private MyBrow _brow;
         private List<MyTab> _list = new List<MyTab>();
         private MetroFramework.Controls.MetroProgressBar _ProgressBar;
+   
         public MyTab(MetroFramework.Controls.MetroTabControl metroTabControl, System.Windows.Forms.ComboBox combo, MetroFramework.Controls.MetroTextBox recherche, 
                             ref int i, MetroFramework.Controls.MetroButton Back, MetroFramework.Controls.MetroButton Forward, ref List<MyTab> list, 
                                 MetroFramework.Controls.MetroProgressBar metroProgressBar)
@@ -576,11 +578,10 @@ namespace white_for_rabbit
         {
 
            // Gestion des onglets, ancrage au 4 coins, onglet vide nommé "New Tab", incremente nombre onglet avec i
-            _metroTabControl.TabPages.Add("   +");
-
+            _form.metroTabControl1.TabPages.Add("   +");
             _metroTabControl.SelectedTab.Controls.Add(_brow);
             _metroTabControl.Dock = DockStyle.Fill;
-
+            
             addNewTab(ref index);
         }
         public void addNewTab(ref int index)
@@ -615,6 +616,7 @@ namespace white_for_rabbit
             
         }
   
-    }
+    } */
 #endregion
+   
 }

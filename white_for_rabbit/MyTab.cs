@@ -14,7 +14,7 @@ namespace white_for_rabbit
 {
     class MyTab : TabPage
     {
- 
+        private MyAwe _awe;
         private MyBrow _brow;
         private List<MyTab> _list = new List<MyTab>();
         private Form1 _form;
@@ -25,7 +25,10 @@ namespace white_for_rabbit
             _list = list;
         }
 
-
+        public MyAwe Awe()
+        {
+            return _awe;
+        }
         public MyBrow Browser()
         {
             return _brow;

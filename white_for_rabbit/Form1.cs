@@ -13,7 +13,6 @@ using System.Resources;
 namespace white_for_rabbit
 {
 
-    //***********************************************************probleme visibilité boutton next suivant 
 
     public partial class Form1 : MetroForm
     {

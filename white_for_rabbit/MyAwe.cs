@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Diagnostics;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -10,29 +12,31 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using System.Resources;
 
+
+
 namespace white_for_rabbit
 {
-    class MyBrow : WebBrowser
+    class MyAwe : Awesomium.Windows.Forms.WebControl
     {
         public string moteur = "https://www.google.fr/#q=";
-        private string _nom;
-        private TabPage _tpage;
-
-        private List<MyTab> _list = new List<MyTab>();
         private Form1 _form;
-
-        public MyBrow(Form1 form,TabPage tpage, ref List<MyTab> list)
+        private TabPage _tpage;
+        private List<MyTab> _list = new List<MyTab>();
+        private string _nom;
+        public MyAwe(Form1 form,TabPage tpage, ref List<MyTab> list)
         {
-            
+           
             _tpage = tpage;
             _form = form;
             //lier la fontion Brow_DocumentCompleted à l'objet 
-            this.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(Brow_DocumentCompleted);
+            this.DocumentReady += new Awesomium.Core.DocumentReadyEventHandler(Awe_DocumentCompleted);
             //lier la fonction Brow_ProgressChanged à l'objet
-            this.ProgressChanged += new WebBrowserProgressChangedEventHandler(Brow_ProgressChanged);
+          // this.+= new (Awe_ProgressChanged);
             _list = list;
+            
         }
-        private void Brow_ProgressChanged(object sender, WebBrowserProgressChangedEventArgs e)
+
+   /*     private void Awe_ProgressChanged(object sender, WebBrowserProgressChangedEventArgs e)
         {
             if (_tpage == _form.metroTabControl1.SelectedTab)
             {
@@ -49,13 +53,14 @@ namespace white_for_rabbit
                 }
             }
             else _form.metroProgressBar.Visible = false;
-        }
-        private void Brow_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
+        }*/
 
+        private void Awe_DocumentCompleted(object sender, Awesomium.Core.DocumentReadyEventArgs e)
+        {
+            
             string result;
             int L;
-            this._nom = this.DocumentTitle;
+            this._nom = this.Title;
             L = _nom.Length;
             result = "";
             if (L > 25)                                              //si nom > a la longueur -> mettre la longueur voulu dans L + ... 
@@ -70,17 +75,16 @@ namespace white_for_rabbit
             MessageBox.Show(_form.url.Text.ToString());
 
         }
-
         public void Actualiser()
         {
             //verifier que le browser a charger 
-            if (_list[_form.metroTabControl1.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Complete || _list[_form.metroTabControl1.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Interactive)
+            if (_list[_form.metroTabControl1.SelectedIndex].Awe().OnProcessCreated == WebBrowserReadyState.Complete || _list[_form.metroTabControl1.SelectedIndex].Awe().ReadyState == WebBrowserReadyState.Interactive)
             {
                 // afficher url de la page actuelle
-                _form.url.Text = _list[_form.metroTabControl1.SelectedIndex].Browser().Url.ToString();
+                _form.url.Text = _list[_form.metroTabControl1.SelectedIndex].Awe().Source.ToString();
             }
             //si il y a une page suivante active le bouton suivant 
-            if (_list[_form.metroTabControl1.SelectedIndex].Browser().CanGoForward)
+            if (_list[_form.metroTabControl1.SelectedIndex].Awe().CanGoForward()==true)
             {
                 _form.ButtonNext.Enabled = true;
             }
@@ -90,7 +94,7 @@ namespace white_for_rabbit
             }
 
             //Si il ya une page precedente alors on active le bouton precedent
-            if (_list[_form.metroTabControl1.SelectedIndex].Browser().CanGoBack)
+            if (_list[_form.metroTabControl1.SelectedIndex].Awe().CanGoBack()==true)
             {
                 _form.ButtonBack.Enabled = true;
             }
@@ -105,49 +109,50 @@ namespace white_for_rabbit
             {
                 if (_form.url.Text.StartsWith("http://") || _form.url.Text.StartsWith("https://") == true)
                 {
-                    _list[_form.metroTabControl1.SelectedIndex].Browser().Navigate(new Uri(_form.url.Text));
+                    _list[_form.metroTabControl1.SelectedIndex].Awe().Source=new Uri(_form.url.Text);
                     // si le texte tapé comence par http:// ou https:// on va a l'adresse saisie
                 }
                 if (_form.url.Text.EndsWith(".com") == true)
                 {
-                    _list[_form.metroTabControl1.SelectedIndex].Browser().Navigate(new Uri("https://" + _form.url.Text));
+                    _list[_form.metroTabControl1.SelectedIndex].Awe().Source=new Uri("https://" + _form.url.Text);
                     // si le texte tapé fini par .com on va a l'adresse saisie
                 }
                 if (_form.url.Text.EndsWith(".fr") == true)
                 {
-                    _list[_form.metroTabControl1.SelectedIndex].Browser().Navigate(new Uri("http://" + _form.url.Text));
+                    _list[_form.metroTabControl1.SelectedIndex].Awe().Source=new Uri("http://" + _form.url.Text);
                     // si le texte tapé fini par .fr on va a l'adresse saisie
                 }
             }
             else
             {
-                _list[_form.metroTabControl1.SelectedIndex].Browser().Navigate(new Uri(moteur + _form.url.Text));
+                _list[_form.metroTabControl1.SelectedIndex].Awe().Source=new Uri(moteur + _form.url.Text);
                 //Sinon on le recherche
             }
         }
         public void back()
         {
-            _list[_form.metroTabControl1.SelectedIndex].Browser().GoBack(); // ... on revient en arrière sur l'onglet actuel 
+            _list[_form.metroTabControl1.SelectedIndex].Awe().GoBack(); // ... on revient en arrière sur l'onglet actuel 
         }
         public void next()
         {
-            _list[_form.metroTabControl1.SelectedIndex].Browser().GoForward();// ... on repart en avant sur l'onglet actuel
+            _list[_form.metroTabControl1.SelectedIndex].Awe().GoForward();// ... on repart en avant sur l'onglet actuel
         }
         public void actu()
         {
-            _list[_form.metroTabControl1.SelectedIndex].Browser().Refresh();// ... on actualise la page actuel
+            _list[_form.metroTabControl1.SelectedIndex].Awe().Refresh();// ... on actualise la page actuel
         }
         public void stop()
         {
-            _list[_form.metroTabControl1.SelectedIndex].Browser().Stop();// on stop le chargement de la page actuel
+            _list[_form.metroTabControl1.SelectedIndex].Awe().Stop();// on stop le chargement de la page actuel
         }
         public void home()
         {
-            _list[_form.metroTabControl1.SelectedIndex].Browser().Navigate("www.google.com"); // aller a la page www.google.fr
+            _list[_form.metroTabControl1.SelectedIndex].Awe().Source=new Uri("www.google.com"); // aller a la page www.google.fr
         }
         public void recherche()
         {
-            _list[_form.metroTabControl1.SelectedIndex].Browser().Navigate(new Uri(moteur + _form.recherche.Text));
+            _list[_form.metroTabControl1.SelectedIndex].Awe().Source=new Uri(moteur + _form.recherche.Text);
         }
+
     }
 }

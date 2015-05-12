@@ -14,8 +14,8 @@ namespace white_for_rabbit
 {
     class MyTab : TabPage
     {
-        private MyAwe _awe;
-        private MyBrow _brow;
+        private MyAwe _awe=null;
+        private MyBrow _brow=null;
         private List<MyTab> _list = new List<MyTab>();
         private Form1 _form;
         public MyTab(Form1 form, ref List<MyTab> list)
@@ -47,17 +47,32 @@ namespace white_for_rabbit
         {
             //Ajoute l'onglet nouvellement créer à la collection de controle d'onglet
             _form.metroTabControl1.TabPages.Insert(_form.metroTabControl1.TabCount - 1, this);
+            if (_form.ToggleMyAwe.Checked == true)
+            {
+                //Creation d'un objet navigateur
+                _awe = new MyAwe(_form, this, ref _list);
 
-            //Creation d'un objet navigateur
-            _brow = new MyBrow(_form,this, ref _list);
+                //Ajoute le navigateur a l'onglet précedement créer
+                this.Controls.Add(_awe);
 
-            //Ajoute le navigateur a l'onglet précedement créer
-            this.Controls.Add(_brow);
-            _brow.Dock = DockStyle.Fill;
-            _brow.ScriptErrorsSuppressed = true;
-            _form.metroTabControl1.SelectTab(this);
+                _awe.Dock = DockStyle.Fill;
+                _form.metroTabControl1.SelectTab(this);
+                
+            }
+            if(_form.ToggleMyBrow.Checked==true)
+            {
+                //Creation d'un objet navigateur
+                _brow = new MyBrow(_form, this, ref _list);
 
-            _brow.Navigate("www.google.fr");
+                //Ajoute le navigateur a l'onglet précedement créer
+                this.Controls.Add(_brow);
+
+                _brow.Dock = DockStyle.Fill;
+                _brow.ScriptErrorsSuppressed = true;
+                _form.metroTabControl1.SelectTab(this);
+
+            }
+
 
             //Suivre l'onglet newtab 
             index++;
@@ -70,7 +85,14 @@ namespace white_for_rabbit
             _form.metroTabControl1.TabPages.Remove(_form.metroTabControl1.SelectedTab);       // supprime l'onget selectionner 
             if (index - 1 == tab) _form.metroTabControl1.SelectTab(tab - 1);                 // si l'onglet est le dernier selection celui avant le newtab 
             else _form.metroTabControl1.SelectTab(tab);                                  //sinon selectioner l'onglet juste après 
-            _brow.Actualiser();
+            if (_list[_form.metroTabControl1.SelectedIndex].Browser() != null)
+            {
+                _list[_form.metroTabControl1.SelectedIndex].Browser().Actualiser();
+            }
+            if (_list[_form.metroTabControl1.SelectedIndex].Awe() != null)
+            {
+               _list[_form.metroTabControl1.SelectedIndex].Awe().Actualiser();
+            }
             index--;                                                               // suivre l'onglet newtab 
 
         }

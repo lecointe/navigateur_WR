@@ -32,6 +32,10 @@
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.recherche = new MetroFramework.Controls.MetroTextBox();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.ToggleMyAwe = new MetroFramework.Controls.MetroToggle();
+            this.ToggleMyBrow = new MetroFramework.Controls.MetroToggle();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -80,6 +84,10 @@
             // metroPanel1
             // 
             this.metroPanel1.BackColor = System.Drawing.Color.Lime;
+            this.metroPanel1.Controls.Add(this.metroLabel2);
+            this.metroPanel1.Controls.Add(this.metroLabel1);
+            this.metroPanel1.Controls.Add(this.ToggleMyAwe);
+            this.metroPanel1.Controls.Add(this.ToggleMyBrow);
             this.metroPanel1.Controls.Add(this.button4);
             this.metroPanel1.Controls.Add(this.button3);
             this.metroPanel1.Controls.Add(this.button2);
@@ -100,6 +108,53 @@
             this.metroPanel1.VerticalScrollbarSize = 10;
             this.metroPanel1.MouseLeave += new System.EventHandler(this.metroPanel1_MouseLeave);
             this.metroPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.metroPanel1_MouseMove);
+            // 
+            // metroLabel2
+            // 
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.Location = new System.Drawing.Point(3, 422);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(81, 19);
+            this.metroLabel2.TabIndex = 12;
+            this.metroLabel2.Text = "Awesomium";
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(3, 400);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(83, 19);
+            this.metroLabel1.TabIndex = 11;
+            this.metroLabel1.Text = "WebBrowser";
+            this.metroLabel1.Click += new System.EventHandler(this.metroLabel1_Click);
+            // 
+            // ToggleMyAwe
+            // 
+            this.ToggleMyAwe.AutoSize = true;
+            this.ToggleMyAwe.Location = new System.Drawing.Point(87, 425);
+            this.ToggleMyAwe.Name = "ToggleMyAwe";
+            this.ToggleMyAwe.Size = new System.Drawing.Size(80, 17);
+            this.ToggleMyAwe.TabIndex = 10;
+            this.ToggleMyAwe.Text = "Off";
+            this.ToggleMyAwe.UseSelectable = true;
+            this.ToggleMyAwe.CheckedChanged += new System.EventHandler(this.ToggleMyAwe_CheckedChanged);
+            this.ToggleMyAwe.CheckStateChanged += new System.EventHandler(this.ToggleMyAwe_CheckStateChanged);
+            this.ToggleMyAwe.Click += new System.EventHandler(this.ToggleMyAwe_Click);
+            // 
+            // ToggleMyBrow
+            // 
+            this.ToggleMyBrow.AutoSize = true;
+            this.ToggleMyBrow.Checked = true;
+            this.ToggleMyBrow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ToggleMyBrow.Location = new System.Drawing.Point(87, 402);
+            this.ToggleMyBrow.Name = "ToggleMyBrow";
+            this.ToggleMyBrow.Size = new System.Drawing.Size(80, 17);
+            this.ToggleMyBrow.TabIndex = 9;
+            this.ToggleMyBrow.Text = "On";
+            this.ToggleMyBrow.UseSelectable = true;
+            this.ToggleMyBrow.CheckedChanged += new System.EventHandler(this.ToggleMyBrow_CheckedChanged);
+            this.ToggleMyBrow.CheckStateChanged += new System.EventHandler(this.ToggleMyBrow_CheckStateChanged);
+            this.ToggleMyBrow.Click += new System.EventHandler(this.ToggleMyBrow_Click);
             // 
             // button4
             // 
@@ -291,6 +346,7 @@
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.metroPanel1.ResumeLayout(false);
+            this.metroPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -303,8 +359,9 @@
         public System.Windows.Forms.ComboBox url;
         public MetroFramework.Controls.MetroTabControl metroTabControl1;
         public MetroFramework.Controls.MetroProgressBar metroProgressBar;
+        public MetroFramework.Controls.MetroToggle ToggleMyAwe;
+        public MetroFramework.Controls.MetroToggle ToggleMyBrow;
 
-        private MetroFramework.Controls.MetroPanel metroPanel1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timer2;
         private MetroFramework.Controls.MetroTile metroTile1;
@@ -318,6 +375,9 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private MetroFramework.Controls.MetroButton metroButton1;
+        private MetroFramework.Controls.MetroPanel metroPanel1;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroLabel metroLabel2;
 
     }
 }

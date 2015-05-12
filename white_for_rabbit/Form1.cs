@@ -19,6 +19,7 @@ namespace white_for_rabbit
                 //Awesomium.Windows.Forms.WebControl Brow;
         MyTab Tab;
         int i = 0;
+        // list qui regroupe les onglet (le numero de ligne est leur index)
         List<MyTab> _list = new List<MyTab>();
 
 
@@ -40,7 +41,7 @@ namespace white_for_rabbit
             Tab = new MyTab(this,ref _list);
             _list.Add(Tab);
             Tab.LoadTab(ref i);
-         //   i = Tab.compter();
+     
             //Les boutons precedent, suivant et stop sont grisé au demarage
             // buttonBack.Enabled = false;
             // buttonForward.Enabled = false;
@@ -109,46 +110,106 @@ namespace white_for_rabbit
             }
             else
             {
-                Tab.Browser().Actualiser();
+              if ( _list[metroTabControl1.SelectedIndex].Browser()!=null)
+              {
+                  ToggleMyBrow.Checked = true;
+                  ToggleMyAwe.Checked = false;
+                   _list[metroTabControl1.SelectedIndex].Browser().Actualiser();
+              }
+              if (_list[metroTabControl1.SelectedIndex].Awe() != null)
+              {
+                  ToggleMyAwe.Checked = true;
+                  ToggleMyBrow.Checked = false;
+                  _list[metroTabControl1.SelectedIndex].Awe().Actualiser();
+              }
             }
-            
         }
         private void ButtonHome_Click(object sender, EventArgs e)
         {
-            Tab.Browser().home();
+            if (ToggleMyAwe.Checked == true)
+            {
+                _list[metroTabControl1.SelectedIndex].Awe().home();
+            }
+            if (ToggleMyBrow.Checked == true)
+            {
+                _list[metroTabControl1.SelectedIndex].Browser().home();
+            }
         }
         private void ButtonBack_Click(object sender, EventArgs e)
         {
-            Tab.Browser().back();
+            if (ToggleMyAwe.Checked == true)
+            {
+                _list[metroTabControl1.SelectedIndex].Awe().back();
+            }
+            if (ToggleMyBrow.Checked == true)
+            {
+                _list[metroTabControl1.SelectedIndex].Browser().back();
+            }
         }
         private void url_KeyPress(object sender, KeyPressEventArgs e)
         {
                if (e.KeyChar == (char)13)
             {
-                Tab.Browser().url();
+                if (ToggleMyAwe.Checked == true)
+                {
+                    _list[metroTabControl1.SelectedIndex].Awe().url();
+                }
+                if (ToggleMyBrow.Checked == true)
+                {
+                    _list[metroTabControl1.SelectedIndex].Browser().url();
+                }
             }
             
         }
         private void ButtonActu_Click(object sender, EventArgs e)
         {
-            Tab.Browser().actu(); 
-            
+            if (ToggleMyAwe.Checked == true)
+            {
+                _list[metroTabControl1.SelectedIndex].Awe().actu();
+            }
+            if (ToggleMyBrow.Checked == true)
+            {
+                _list[metroTabControl1.SelectedIndex].Browser().actu();
+            }  
         }
         private void ButtonNext_Click(object sender, EventArgs e)
         {
-            Tab.Browser().next(); 
+            if (ToggleMyAwe.Checked == true)
+            {
+                _list[metroTabControl1.SelectedIndex].Awe().next();
+            }
+            if (ToggleMyBrow.Checked == true)
+            {
+                _list[metroTabControl1.SelectedIndex].Browser().next();
+            }
         }
         private void recherche_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
-                Tab.Browser().recherche();
+                if (ToggleMyAwe.Checked == true)
+                {
+                    _list[metroTabControl1.SelectedIndex].Awe().recherche();
+                }
+                if (ToggleMyBrow.Checked == true)
+                {
+                    _list[metroTabControl1.SelectedIndex].Browser().recherche();
+                }
             }
         }
         private void ButtonTraducteur_Click(object sender, EventArgs e)
         {
             // ne fonctionne pas pour webbrowser mais pour awesonium
             // Brow.ExecuteJavascript("(function(){var s = document.createElement('script'); s.type = 'text/javascript'; s.src = 'http://labs.microsofttranslator.com/bookmarklet/default.aspx?f=js&to=fr'; document.body.insertBefore(s, document.body.firstChild);})()");
+        }
+        private void ToggleMyBrow_Click(object sender, EventArgs e)
+        {
+            ToggleMyAwe.Checked = false;
+        }
+
+        private void ToggleMyAwe_Click(object sender, EventArgs e)
+        {
+            ToggleMyBrow.Checked = false;
         }
 #endregion
 
@@ -199,6 +260,38 @@ namespace white_for_rabbit
                 Tab.deletTab(ref i);
             }
             else Application.Exit();
+        }
+
+        private void ToggleMyBrow_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToggleMyAwe_CheckedChanged(object sender, EventArgs e)
+        {
+
+
+        }
+
+
+
+        private void ToggleMyBrow_CheckStateChanged(object sender, EventArgs e)
+        {
+          //  if (ToggleMyBrow.Checked != true)
+            
+           //     ToggleMyAwe.Checked = false;
+           //     ToggleMyBrow.Checked = true;
+            
+        }
+
+        private void ToggleMyAwe_CheckStateChanged(object sender, EventArgs e)
+        {
+          //  ToggleMyBrow.Checked = false;
+        }
+
+        private void metroLabel1_Click(object sender, EventArgs e)
+        {
+
         }
     }
         #endregion

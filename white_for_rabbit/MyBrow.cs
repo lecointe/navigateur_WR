@@ -31,10 +31,11 @@ namespace white_for_rabbit
             //lier la fonction Brow_ProgressChanged à l'objet
             this.ProgressChanged += new WebBrowserProgressChangedEventHandler(Brow_ProgressChanged);
             _list = list;
+            this.Navigate("www.google.fr");
         }
         private void Brow_ProgressChanged(object sender, WebBrowserProgressChangedEventArgs e)
         {
-            if (_tpage == _form.metroTabControl1.SelectedTab)
+            if (this == _list[_form.metroTabControl1.SelectedIndex].Browser())
             {
                 _form.metroProgressBar.Minimum = 0;
                 _form.metroProgressBar.Maximum = (int)e.MaximumProgress;
@@ -47,6 +48,7 @@ namespace white_for_rabbit
                 {
                     _form.metroProgressBar.Visible = false;
                 }
+              
             }
             else _form.metroProgressBar.Visible = false;
         }
@@ -65,38 +67,42 @@ namespace white_for_rabbit
             }
             result = _nom.Substring(0, L) + result;                 // couper la chaine apres la longueur L                      
             _tpage.Text = result;
-
+           
             Actualiser();                                            // afficher si possibilité page suivante ou précédente 
-            MessageBox.Show(_form.url.Text.ToString());
+          //  MessageBox.Show(_form.url.Text.ToString());
 
         }
 
         public void Actualiser()
-        {
-            //verifier que le browser a charger 
-            if (_list[_form.metroTabControl1.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Complete || _list[_form.metroTabControl1.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Interactive)
+        {         
+            if (_list[_form.metroTabControl1.SelectedIndex].Browser() != null)
             {
+            //verifier que le browser a charger 
+           if (_list[_form.metroTabControl1.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Complete || _list[_form.metroTabControl1.SelectedIndex].Browser().ReadyState == WebBrowserReadyState.Interactive)
+            {
+
                 // afficher url de la page actuelle
                 _form.url.Text = _list[_form.metroTabControl1.SelectedIndex].Browser().Url.ToString();
-            }
-            //si il y a une page suivante active le bouton suivant 
-            if (_list[_form.metroTabControl1.SelectedIndex].Browser().CanGoForward)
-            {
-                _form.ButtonNext.Enabled = true;
-            }
-            else
-            {
-                _form.ButtonNext.Enabled = false;
-            }
+                           }
+                //si il y a une page suivante active le bouton suivant 
+                if (_list[_form.metroTabControl1.SelectedIndex].Browser().CanGoForward)
+                {
+                    _form.ButtonNext.Enabled = true;
+                }
+                else
+                {
+                    _form.ButtonNext.Enabled = false;
+                }
 
-            //Si il ya une page precedente alors on active le bouton precedent
-            if (_list[_form.metroTabControl1.SelectedIndex].Browser().CanGoBack)
-            {
-                _form.ButtonBack.Enabled = true;
-            }
-            else
-            {
-                _form.ButtonBack.Enabled = false;
+                //Si il ya une page precedente alors on active le bouton precedent
+                if (_list[_form.metroTabControl1.SelectedIndex].Browser().CanGoBack)
+                {
+                    _form.ButtonBack.Enabled = true;
+                }
+                else
+                {
+                    _form.ButtonBack.Enabled = false;
+                }
             }
         }
         public void url()
